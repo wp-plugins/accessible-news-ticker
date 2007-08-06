@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Accessible RSS News Ticker
-Plugin URI: http://pixline.net/wordpress-plugins/accessible-rss-news-ticker/
+Plugin URI: http://pixline.net/wordpress-plugins/accessible-rss-news-ticker-widget/
 Description: Display latest posts or RSS news in an accessible/unobtrusive scroll box. Based on Chris Heilmann's <a href="http://onlinetools.org/tools/domnews/">DOMnews 1.0</a>.
 Author: Pixline
 Version: 0.3rc1
