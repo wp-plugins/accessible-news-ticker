@@ -1,6 +1,6 @@
 === Accessible News Ticker (ANT) ===
 Contributors: pixline
-Donate link: https://www.amazon.com/gp/registry/wishlist/22DE3R0Q3EN76/ref=wl_web/
+Donate link: http://pixline.chipin.com/
 Tags: admin, post, javascript, scroller, news, ticker, widget, widgets, posts
 Requires at least: 2.1
 Tested up to: 2.2.2
