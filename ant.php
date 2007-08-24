@@ -4,7 +4,7 @@ Plugin Name: Accessible RSS News Ticker
 Plugin URI: http://pixline.net/wordpress-plugins/accessible-rss-news-ticker-widget/
 Description: Display latest posts or RSS news in an accessible/unobtrusive scroll box. Based on Chris Heilmann's <a href="http://onlinetools.org/tools/domnews/">DOMnews 1.0</a>.
 Author: Pixline
-Version: 0.3rc1
+Version: 0.3rc2
 Author URI: http://pixline.net/
 
 ANT Plugin (C) 2007 Paolo Tresso / Pixline - http://pixline.net/
@@ -29,13 +29,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 $parts = pathinfo(__FILE__);
 define("CACHE_PATH",str_replace("plugins/accessible-news-ticker","cache-feed",$parts['dirname']));
-register_activation_hook(__FILE__, 'widget_ant_install');
 
 function widget_ant_install(){
-if(!is_dir(CACHE_PATH) && !is_writeable(CACHE_PATH))
-	mkdir(CACHE_PATH, 0777);
+if(!is_dir(CACHE_PATH) && !is_writeable(CACHE_PATH)){ mkdir(CACHE_PATH, 0777); }
+$ant_defaults = array("title"=>"Latest News", "howmany"=>5, "content"=>"posts", "category"=>"", "feedurl"=> "");
+add_option('widget_ant_options',$ant_defauls);
 }
 
+register_activation_hook(__FILE__, 'widget_ant_install');
 include_once(get_bloginfo('url')."/wp-content/plugins/accessible-news-ticker/includes/simplepie.inc");
 
 function ant_trim_sentence($string, $num){
@@ -95,13 +96,13 @@ wp_print_scripts();
 }
 
 function widget_ant($args) { 
-#$url = "http://feeds.feedburner.com/pixline";
 
         extract($args); 
         $options = get_option('widget_ant_options'); 
-        $title = empty($options['title']) ? 'Latest News' : $options['title']; 
+		$title = empty($options['title']) ? 'Latest News' : $options['title']; 
         $howmany = empty($options['howmany']) ? 5 : $options['howmany']; 
         $kind = empty($options['content']) ? 'posts' : $options['content']; 
+        $antcat = empty($options['category']) ? '' : $options['category']; 
         $url = empty($options['feedurl']) ? '' : $options['feedurl']; 
 
         echo $before_widget; 
@@ -109,7 +110,7 @@ function widget_ant($args) {
 
 switch($kind):
 	case 'posts':
-	$news = get_posts("numberposts=".$howmany);
+	$news = get_posts("numberposts=".$howmany."&category=".$antcat);
 	echo "<div id='accessible-news-ticker'>";
 		echo "<ul>";
 			foreach($news as $new):
@@ -161,6 +162,7 @@ echo $after_widget;
             $newoptions['title'] = strip_tags(stripslashes($_POST['ant-title'])); 
             $newoptions['howmany'] = strip_tags(stripslashes($_POST['ant-howmany'])); 
 			$newoptions['content'] = strip_tags(stripslashes($_POST['ant-content']));
+			$newoptions['category'] = strip_tags(stripslashes($_POST['ant-category']));
 			$newoptions['feedurl'] = strip_tags(stripslashes($_POST['ant-feedurl']));
         } 
        	if ( $options != $newoptions ) { 
@@ -199,6 +201,23 @@ echo $after_widget;
 			</select>
 		</label> 
 
+        <label for="ant-category" style="line-height:35px;display:block;">(if latest posts) Category: 
+			<select id='ant-category' name="ant-category">
+				<option value='' label='All Categories'>All Categories</option>
+				<?php
+#				$opzioni = array("posts"=>"Latest Posts","rss"=>"RSS Feed");
+				$opzioni = get_categories('type=post&hide_empty=1&hierarchical=0');
+
+				foreach($opzioni as $opzione):
+					if($options['category'] == $opzione->cat_ID) $selected3 = " selected='selected'"; else $selected3 = "";
+					echo "<option value='".$opzione->cat_ID."' label=' ".$opzione->cat_name."'".$selected3."> ".$opzione->cat_name."</option>";
+#					print_r($opzione);
+				endforeach;
+				?>
+			</select>
+		</label> 
+
+
         <label for="ant-feedurl" style="line-height:35px;display:block;">RSS Feed URL:    
 			<?php	if($options['feedurl'] != "") $value = $options['feedurl'];	?>
 			<input type='text' name='ant-feedurl' id='ant-feedurl' size='40' value='<?php echo $value; ?>'/>
@@ -215,7 +234,7 @@ echo $after_widget;
 
 
     register_sidebar_widget('ANT News Ticker', 'widget_ant'); 
-    register_widget_control('ANT News Ticker', 'widget_ant_control', 350, 260); 
+    register_widget_control('ANT News Ticker', 'widget_ant_control', 350, 300); 
 	if(!is_admin()):
 	add_action('wp_head','widget_ant_headscript');
 	add_action('wp_footer','widget_ant_footscript');
