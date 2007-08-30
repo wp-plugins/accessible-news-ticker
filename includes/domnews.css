@@ -1,0 +1,19 @@
+#accessible-news-ticker{
+	width:180px;
+}
+/* the news box with JS */
+#accessible-news-ticker.hasJS{
+	height:120px;
+	overflow:hidden;
+	position:relative;
+	border:1px solid #EEE;
+}
+/* The nested UL with JS */
+#accessible-news-ticker.hasJS ul{
+	position:absolute;
+	top:60px;
+	left:0;
+}
+#accessible-news-ticker.hasJS ul li{
+	margin-bottom:1.5em;
+}
