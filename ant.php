@@ -4,7 +4,7 @@ Plugin Name: Accessible RSS News Ticker
 Plugin URI: http://pixline.net/wordpress-plugins/accessible-rss-news-ticker-widget/
 Description: Display latest posts or RSS news in an accessible/unobtrusive scroll box. Based on Chris Heilmann's <a href="http://onlinetools.org/tools/domnews/">DOMnews 1.0</a>.
 Author: Pixline
-Version: 0.3rc2
+Version: 0.3
 Author URI: http://pixline.net/
 
 ANT Plugin (C) 2007 Paolo Tresso / Pixline - http://pixline.net/
@@ -96,7 +96,7 @@ wp_print_scripts();
 }
 
 function widget_ant($args) { 
-
+global $cat;
         extract($args); 
         $options = get_option('widget_ant_options'); 
 		$title = empty($options['title']) ? 'Latest News' : $options['title']; 
@@ -110,7 +110,8 @@ function widget_ant($args) {
 
 switch($kind):
 	case 'posts':
-	$news = get_posts("numberposts=".$howmany."&category=".$antcat);
+#	if(isset($cat) && $cat != 0) $menocat = "&exclude=".$cat; else $menocat = "";	// if global post list, but inside cat, exclude double posts
+	$news = get_posts("numberposts=".$howmany."&category=".$antcat.$menocat);
 	echo "<div id='accessible-news-ticker'>";
 		echo "<ul>";
 			foreach($news as $new):
@@ -164,11 +165,13 @@ echo $after_widget;
 			$newoptions['content'] = strip_tags(stripslashes($_POST['ant-content']));
 			$newoptions['category'] = strip_tags(stripslashes($_POST['ant-category']));
 			$newoptions['feedurl'] = strip_tags(stripslashes($_POST['ant-feedurl']));
-        } 
+
        	if ( $options != $newoptions ) { 
 			$options = $newoptions;
             update_option('widget_ant_options', $newoptions); 
-        }
+        	}
+    	} 
+        $options = get_option('widget_ant_options'); 
 ?> 
         <div> 
 
