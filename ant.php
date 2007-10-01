@@ -4,7 +4,7 @@ Plugin Name: Accessible RSS News Ticker
 Plugin URI: http://pixline.net/wordpress-plugins/accessible-rss-news-ticker-widget/
 Description: Display latest posts or RSS news in an accessible/unobtrusive scroll box. Based on Chris Heilmann's <a href="http://onlinetools.org/tools/domnews/">DOMnews 1.0</a>.
 Author: Pixline
-Version: 0.3
+Version: 0.3.1
 Author URI: http://pixline.net/
 
 ANT Plugin (C) 2007 Paolo Tresso / Pixline - http://pixline.net/
@@ -37,7 +37,8 @@ add_option('widget_ant_options',$ant_defauls);
 }
 
 register_activation_hook(__FILE__, 'widget_ant_install');
-include_once(get_bloginfo('url')."/wp-content/plugins/accessible-news-ticker/includes/simplepie.inc");
+#include_once(get_bloginfo('url')."/wp-content/plugins/accessible-news-ticker/includes/simplepie.inc");
+include_once("includes/simplepie.inc");
 
 function ant_trim_sentence($string, $num){
 //taglia frase e aggiunge ...
