@@ -14,7 +14,7 @@ A news ticker widget, able to display latest posts as well as remote RSS feed. T
 
 Based on the wonderful [DOMNews 1.0](http://onlinetools.org/tools/domnews/) (by Chris Heilmann) and [SimplePie RSS-parsing php class](http://simplepie.org)
 
-[Accessible News Ticker support forum](http://talks.pixline.net/forum/accessible-news-ticker-widget)
+[Accessible News Ticker support forum](http://talks.pixline.net/forum.php?id=4)
 
 == Installation ==
 
@@ -28,4 +28,4 @@ REALLY REALLY IMPORTANT: check your theme's header.php and footer.php for presen
 1. (Optional) Tweak .css file to suit your need.
 1. Enjoy! :-)
 
-[Accessible News Ticker support forum](http://talks.pixline.net/forum/accessible-news-ticker-widget)
+[Accessible News Ticker support forum](http://talks.pixline.net/forum.php?id=4)
