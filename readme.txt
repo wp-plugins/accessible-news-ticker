@@ -3,7 +3,7 @@ Contributors: pixline
 Donate link: http://pixline.chipin.com/
 Tags: admin, post, javascript, scroller, news, ticker, widget, widgets, posts
 Requires at least: 2.1
-Tested up to: 2.3
+Tested up to: 2.5.1
 Stable tag: 0.3.1
 
 A news ticker/scroller widget that displays posts and RSS with accessible javascript).

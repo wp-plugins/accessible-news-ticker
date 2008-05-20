@@ -176,12 +176,12 @@ echo $after_widget;
 ?> 
         <div> 
 
-        <label for="ant-title" style="line-height:35px;display:block;">Widget Title: 
-			<input type="text" id="ant-title" name="ant-title" value="<?php echo $options['title']; ?>" />
+        <label for="ant-title" style="line-height:35px;display:block;"><?php _e("Title:"); ?>
+			<input class="widefat" type="text" id="ant-title" name="ant-title" value="<?php echo $options['title']; ?>" />
 		</label> 
         
-		<label for="ant-howmany" style="line-height:35px;display:block;">How Many Items?  
-			<select id='ant-howmany' name="ant-howmany">
+		<label for="ant-howmany" style="line-height:35px;display:block;"><?php _e('Number of posts to show:'); ?>  
+			<select class="widefat" id='ant-howmany' name="ant-howmany">
 			<?php
 			$quanti = array("1","2","5","10");
 			foreach($quanti as $num):
@@ -193,7 +193,7 @@ echo $after_widget;
 		</label> 
 
         <label for="ant-content" style="line-height:35px;display:block;">Content: 
-			<select id='ant-content' name="ant-content">
+			<select class="widefat" id='ant-content' name="ant-content">
 				<?php
 				$opzioni = array("posts"=>"Latest Posts","rss"=>"RSS Feed");
 
@@ -205,8 +205,8 @@ echo $after_widget;
 			</select>
 		</label> 
 
-        <label for="ant-category" style="line-height:35px;display:block;">(if latest posts) Category: 
-			<select id='ant-category' name="ant-category">
+        <label for="ant-category" style="line-height:35px;display:block;">Post Category: 
+			<select class="widefat" id='ant-category' name="ant-category">
 				<option value='' label='All Categories'>All Categories</option>
 				<?php
 #				$opzioni = array("posts"=>"Latest Posts","rss"=>"RSS Feed");
@@ -224,12 +224,12 @@ echo $after_widget;
 
         <label for="ant-feedurl" style="line-height:35px;display:block;">RSS Feed URL:    
 			<?php	if($options['feedurl'] != "") $value = $options['feedurl'];	?>
-			<input type='text' name='ant-feedurl' id='ant-feedurl' size='40' value='<?php echo $value; ?>'/>
+			<input class="widefat" type='text' name='ant-feedurl' id='ant-feedurl' size='20' value='<?php echo $value; ?>'/>
 		</label> 
 
         <input type="hidden" name="ant-submit" id="ant-submit" value="1" /> 
 		
-		<p><small><a href='#'>Accessible News Ticker</a> widget by Pixline.<br/>Based on Chris Heilmann's '<a href='http://medienfreunde.com/lab/innerfade/'>DOMNews 1.0</a> unobtrusive/accessible javascript news ticker.</small></p>
+		<p style="margin-top:15px;"><a href='http://pixline.net/wordpress-plugins/accessible-rss-news-ticker-widget/en/'>Accessible News Ticker</a> widget.<br /><small>&copy;GPL 2008 Pixline |  <a href="http://talks.pixline.net/forum.php?id=4">Support Forum</a> | <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paolo%40pixline%2enet&item_name=Support%20to%20opensource%20projects%20at%20Pixline&no_shipping=1&cn=Something%20to%20say%3f&tax=0&currency_code=EUR&lc=IT&bn=PP%2dDonationsBF&charset=UTF%2d8">Donate!</a></small></p>
 
         </div> 
     <?php 
@@ -237,8 +237,9 @@ echo $after_widget;
     } 
 
 
-    register_sidebar_widget('ANT News Ticker', 'widget_ant'); 
-    register_widget_control('ANT News Ticker', 'widget_ant_control', 350, 300); 
+	$widget_ops = array('classname' => 'ant_news_ticker', 'description' => __( "Accessible news ticker, with latest posts / RSS support.") );
+    wp_register_sidebar_widget('ant', 'ANT News Ticker', 'widget_ant', $widget_ops); 
+    wp_register_widget_control('ant', 'ANT News Ticker', 'widget_ant_control'); 
 	if(!is_admin()):
 	add_action('wp_head','widget_ant_headscript');
 	add_action('wp_footer','widget_ant_footscript');
